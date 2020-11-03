@@ -1,26 +1,26 @@
-﻿using System.Diagnostics.Tracing;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
 
+    [SerializeField] private Button _replayButton;
     public delegate void GameDelegate();
-    public static event GameDelegate GameOver;    
+    public static event GameDelegate GameOver;
 
+    /*public event Action<bool> OnGameOver = null;*/ 
     public static GameManager Instanse;
 
     public GameObject gameOverPage;
-    public Text scoreText;
+
 
     enum PageState
     {
         None,
         GameOver
     }
-
-    private int score;
-    private bool isGameOver = false;
+    
+    public bool isGameOver = false;
 
     public bool IsGameOver { get { return isGameOver; } }
 
@@ -31,22 +31,19 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        score = 0;
+        _replayButton.onClick.AddListener(ConfirmGameOver);
     }
 
     private void OnEnable()
     {
         ShipController.OnPlayerDied += PlayerDied;
-        ShipController.OnPlayerScored += PlayerScored;
-
     }
     private void OnDisable()
     {
         ShipController.OnPlayerDied -= PlayerDied;
-        ShipController.OnPlayerScored -= PlayerScored;
     }
 
-    private  void SetPageState(PageState state)
+    void SetPageState(PageState state)
     {
         switch (state)
         {
@@ -64,29 +61,15 @@ public class GameManager : MonoBehaviour
     public void ConfirmGameOver()
     {
         GameOver();
-        scoreText.text = "0";
-        score = 0;
         SetPageState(PageState.None);
         isGameOver = false;
 
     }
 
-    private void PlayerDied()
+    void PlayerDied()
     {
         isGameOver = true;
-        int savedScore = PlayerPrefs.GetInt("HighScore");
-        if (score > savedScore)
-            PlayerPrefs.SetInt("HighScore", score);
-        PlayerPrefs.SetInt("CurrentScore", score);
-
-
         SetPageState(PageState.GameOver);
-    }
-
-    private void PlayerScored()
-    {
-        score++;
-        scoreText.text = score.ToString();
     }
 
 }

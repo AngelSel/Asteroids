@@ -341,6 +341,7 @@ GameObject:
   - component: {fileID: 519420030}
   - component: {fileID: 519420034}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -368,8 +369,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464ad000f50a51544ab5d95f0c835fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _replayButton: {fileID: 1688280824}
   gameOverPage: {fileID: 720556181}
-  scoreText: {fileID: 209579617}
+  isGameOver: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -453,6 +455,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1222471717}
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1d60e14bb988e429f20444314aba99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreText: {fileID: 209579617}
+  _replayButton: {fileID: 1688280824}
 --- !u!1 &720556181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,7 +1319,7 @@ GameObject:
   - component: {fileID: 1688280825}
   - component: {fileID: 1688280824}
   m_Layer: 5
-  m_Name: Button
+  m_Name: replayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
