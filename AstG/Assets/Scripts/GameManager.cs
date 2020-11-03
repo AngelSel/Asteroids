@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button _replayButton;
     public delegate void GameDelegate();
     public static event GameDelegate GameOver;
-
-    /*public event Action<bool> OnGameOver = null;*/ 
     public static GameManager Instanse;
 
     public GameObject gameOverPage;
@@ -43,7 +41,7 @@ public class GameManager : MonoBehaviour
         ShipController.OnPlayerDied -= PlayerDied;
     }
 
-    void SetPageState(PageState state)
+    private void SetPageState(PageState state)
     {
         switch (state)
         {
@@ -66,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void PlayerDied()
+    private void PlayerDied()
     {
         isGameOver = true;
         SetPageState(PageState.GameOver);

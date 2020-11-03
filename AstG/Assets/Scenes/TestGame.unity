@@ -534,9 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7caf3e0d7e108534ba06c84d165dfe90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolObjectPrefab: {fileID: 5117602152948133381, guid: 940138355cc71504db21c1b7b38fb164,
-    type: 3}
-  poolSize: 10
+  coinPoolConfig: {fileID: 11400000, guid: e206a4e9e3cc88744854cd5d0018f273, type: 2}
 --- !u!4 &728442514
 Transform:
   m_ObjectHideFlags: 0
