@@ -8,117 +8,92 @@ public class ShipController : MonoBehaviour
     public float speed;
     private float heigth;
     private float widtgh;
-    bool isOn = false;
+    private bool isOn = false;
     public delegate void PlayerDelegate();
     public static event PlayerDelegate OnPlayerDied;
     public static event PlayerDelegate OnPlayerScored;
-    private float w;
-    Rigidbody2D rb;
-    GameManager game;
+    private Rigidbody2D rb;
+    private GameManager game;
     public bool isWork;
     public TrailRenderer shipTrail;
 
     private void OnEnable()
     {
         GameManager.GameOver += OnGameOverComfirmed;
+        Lean.Touch.LeanTouch.OnFingerDown += FingerDown;
+        Lean.Touch.LeanTouch.OnFingerUp += FingerUp;
     }
 
 
     private void OnDisable()
     {
         GameManager.GameOver -= OnGameOverComfirmed;
+        Lean.Touch.LeanTouch.OnFingerDown -= FingerDown;
+        Lean.Touch.LeanTouch.OnFingerUp -= FingerUp;
     }
 
-    void OnGameOverComfirmed()
+    private void OnGameOverComfirmed()
     {
         transform.position = new Vector3(0, -3, 0);
         rb.velocity = Vector3.zero;
         rb.simulated = true;
         shipTrail.Clear();
-
     }
 
-    void Start()
+    private void Start()
     {
-
         isWork = false;
         rb = GetComponent<Rigidbody2D>();
         Camera cam = Camera.main;
         heigth = 2f * cam.orthographicSize;
         widtgh = heigth * cam.aspect - 0.7f;
-        w = widtgh;
         game = GameManager.Instanse;
     }
-
-    private void Update()
+    private void FingerDown(Lean.Touch.LeanFinger finger)
     {
-
-        /*   
-   if(isWork)
-   {
-   isOn = true;
-   }
-   else
-   {
-   isOn = false;
-           }    */
-
-        if (Input.touchCount>0 && Input.GetTouch(0).phase == TouchPhase.Stationary)
-   {
-   isOn = true;
-   }
-   else
-   {
-   isOn = false;
-   }
-
+        isOn = true;
     }
 
-    void FixedUpdate()
+    private void FingerUp(Lean.Touch.LeanFinger finger)
+    {
+        isOn = false;
+    }
+    private void FixedUpdate()
     {
         if (game.IsGameOver)
             return;
         if (transform.position.x+0.2f >= widtgh / 2 || transform.position.x-0.2f <= (-widtgh / 2))
         {
-           speed = speed * -1;
-            w = w * -1;
-
+            speed *= -1;
         }
-         //pos = new Vector3(w / 2, transform.position.y);
 
-        //transform.position = Vector3.Lerp(transform.position, pos, 1.2f * Time.deltaTime);
+        transform.Translate(new Vector3(1, 0, 0) * (Time.deltaTime * speed));
 
-
-       transform.Translate(new Vector3(1, 0, 0) * Time.deltaTime * speed);
-
-
-        switch (isOn)
+        if (isOn)
         {
-            case true:
-                rb.AddForce(new Vector2(0f, 8f), ForceMode2D.Force);
-                rb.drag = 0;
-                break;
-            case false:
-                rb.drag = 2;
-                break;
-
+            rb.AddForce(new Vector2(0f, 8f), ForceMode2D.Force);
+            rb.drag = 0;
+        }
+        else
+        {
+            rb.drag = 2;
         }
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "DeathZone")
+        if(collision.gameObject.CompareTag("DeathZone"))
         {
             rb.simulated = false;
             OnPlayerDied();
         }
 
-        if(collision.gameObject.tag == "ScoreZone")
+        if(collision.gameObject.CompareTag("ScoreZone"))
         {
             OnPlayerScored();
         }
 
-        if(collision.gameObject.tag == "Coin")
+        if(collision.gameObject.CompareTag("Coin"))
         {
             OnPlayerScored();
             collision.gameObject.SetActive(false);

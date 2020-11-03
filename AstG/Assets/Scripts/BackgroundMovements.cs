@@ -2,25 +2,25 @@
 
 public class BackgroundMovements : MonoBehaviour
 {
-    public GameObject bc;
-    void OnGameOverConf()
+    [SerializeField] private GameObject background;
+    private void OnGameOverConfirmed()
     {
-        bc.transform.position = Vector3.zero;
+        background.transform.position = Vector3.zero;
     }
 
     private void OnEnable()
     {
-        GameManager.GameOver += OnGameOverConf;
+        GameManager.GameOver += OnGameOverConfirmed;
     }
     private void OnDisable()
     {
-        GameManager.GameOver -= OnGameOverConf;
+        GameManager.GameOver -= OnGameOverConfirmed;
     }
 
-    void Update()
+    private void Update()
     {
-        if (transform.position.y >= bc.transform.position.y + 12.8f)
-            bc.transform.position = new Vector3(bc.transform.position.x, bc.transform.position.y + 12.8f, 0);
+        if (transform.position.y >= background.transform.position.y + 12.8f)
+            background.transform.position = new Vector3(background.transform.position.x, background.transform.position.y + 12.8f, 0);
     }
 
 

@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class CurrentScore : MonoBehaviour
 {
-    Text currentScore;
+    private Text _currentScore;
 
     private void OnEnable()
     {
-        currentScore = GetComponent<Text>();
-        currentScore.text = "Score: " + PlayerPrefs.GetInt("CurrentScore").ToString();
+        _currentScore = GetComponent<Text>();
+        _currentScore.text = "Score: " + PlayerPrefs.GetInt("CurrentScore").ToString();
     }
 }

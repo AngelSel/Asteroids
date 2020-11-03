@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
         GameOver
     }
 
-    int score;
-    bool isGameOver = false;
+    private int score;
+    private bool isGameOver = false;
 
     public bool IsGameOver { get { return isGameOver; } }
 
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         ShipController.OnPlayerScored -= PlayerScored;
     }
 
-    void SetPageState(PageState state)
+    private  void SetPageState(PageState state)
     {
         switch (state)
         {
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    void PlayerDied()
+    private void PlayerDied()
     {
         isGameOver = true;
         int savedScore = PlayerPrefs.GetInt("HighScore");
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         SetPageState(PageState.GameOver);
     }
 
-    void PlayerScored()
+    private void PlayerScored()
     {
         score++;
         scoreText.text = score.ToString();
