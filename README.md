@@ -4,4 +4,3 @@ Asteroid is a small scrolling game, where you play as a space ship avoiding aste
 
 ![](Readmi_Images/gameProcess.bmp) 
 
-![](Readmi_Images/gameEnd.bmp)
